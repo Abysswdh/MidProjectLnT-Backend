@@ -1,0 +1,60 @@
+@extends('layouts.app')
+
+@section('title', 'Edit Kategori')
+
+@section('content')
+<div class="mb-4">
+    <a href="{{ route('categories.index') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Kembali
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-pencil me-2"></i>Edit Kategori</h5>
+            </div>
+            <div class="card-body p-4">
+                <form action="{{ route('categories.update', $category) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama Kategori <span class="text-danger">*</span></label>
+                        <input type="text" 
+                               class="form-control @error('name') is-invalid @enderror" 
+                               id="name" 
+                               name="name" 
+                               value="{{ old('name', $category->name) }}"
+                               placeholder="Masukkan nama kategori"
+                               required>
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="description" class="form-label">Deskripsi</label>
+                        <textarea class="form-control @error('description') is-invalid @enderror" 
+                                  id="description" 
+                                  name="description" 
+                                  rows="4"
+                                  placeholder="Masukkan deskripsi kategori (opsional)">{{ old('description', $category->description) }}</textarea>
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-1"></i>Simpan Perubahan
+                        </button>
+                        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
